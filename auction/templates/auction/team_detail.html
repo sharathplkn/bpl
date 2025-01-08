@@ -93,7 +93,7 @@
             </tr>
             <tr>
                 <th>Purse Remaining</th>
-                <td>₹{{ team.purse_remaining }}</td>
+                <td>${{ team.purse_remaining }} M</td>
             </tr>
         </table>
         
@@ -104,7 +104,7 @@
                 <div class="player-card">
                     <img src="{{ player.card_image.url }}" alt="{{ player.name }} Card">
                     <h4>{{ player.name }}</h4>
-                    <p><strong>Price:</strong> ₹{{ player.base_price }}</p>
+                    <p><strong>Price:</strong> ${{ player.base_price }} M</p>
                     <p><strong>Year:</strong> {{ player.year }}</p>
                 </div>
             {% empty %}

@@ -1,17 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
-body {
-  margin: 0;
-  padding: 0;
-  color: white;
-  overflow: hidden;
-  position: relative;
-}
+
 
 .container {
   max-width: 1200px;
   margin: 40px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
