@@ -1,0 +1,117 @@
+{% extends 'auction/home.html' %}
+{% load static %}
+
+{% block title %}{{ team.team_name }} Details{% endblock %}
+
+{% block content %}
+    <style>
+        .team-detail {
+            text-align: center;
+            padding: 20px;
+        }
+        .team-logo {
+            max-width: 150px; /* Adjust to make the logo smaller */
+            max-height: 150px;
+            margin-bottom: 20px;
+        }
+        table {
+            margin: 20px auto; /* Center the table */
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #f9f9f9; /* Light gray background */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd; /* Add table borders */
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50; /* Green background for headers */
+            color: white; /* White text for headers */
+            font-weight: bold;
+        }
+        .players-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f2f2f2; /* Light gray background for player section */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .player-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            width: 200px; /* Adjust card width */
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .player-card img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color:black;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        body{
+            background-color: white;
+        }
+        h2{
+            font-size: xx-large;
+        }
+    </style>
+
+    <div class="team-detail">
+        <h2>{{ team.team_name }}</h2>
+        <img src="{{ team.logo.url }}" alt="{{ team.team_name }} Logo" class="team-logo">
+        
+        
+        <table>
+            <tr>
+                <th>Manager</th>
+                <td>{{ team.manager }}</td>
+            </tr>
+            <tr>
+                <th>Owner</th>
+                <td>{{ team.owner }}</td>
+            </tr>
+            <tr>
+                <th>Purse Remaining</th>
+                <td>₹{{ team.purse_remaining }}</td>
+            </tr>
+        </table>
+        
+        
+        <div class="players-container">
+            
+            {% for player in players %}
+                <div class="player-card">
+                    <img src="{{ player.card_image.url }}" alt="{{ player.name }} Card">
+                    <h4>{{ player.name }}</h4>
+                    <p><strong>Price:</strong> ₹{{ player.base_price }}</p>
+                    <p><strong>Year:</strong> {{ player.year }}</p>
+                </div>
+            {% empty %}
+                <p>No players assigned to this team.</p>
+            {% endfor %}
+        </div>
+        
+        <a href="{% url 'clubs' %}" class="back-link">← Back to Clubs</a>
+    </div>
+{% endblock %}

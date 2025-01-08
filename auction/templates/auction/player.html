@@ -1,0 +1,46 @@
+{% extends 'auction/home.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Cards</title>
+    <link rel="stylesheet" href="{% static 'css/player.css' %}">
+
+</head>
+<body>
+<div class="area" >
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+            <div class="container">
+                <h1>Players Cards</h1>
+                <div class="player-grid">
+                    {% for player in players %}
+                    <div class="player-card">
+                        <a href="{% url 'auction' player.id %}">
+                            <img src="{{ player.card_image.url }}" alt="Player Card">
+                            {% if player.team %}
+                            <!-- Overlay or replacement for sold-out -->
+                            <div class="sold-out-overlay">
+                                <img src="{% static 'images/soldout.png' %}" alt="Sold Out">
+                            </div>
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div >
+{% endblock %}
+

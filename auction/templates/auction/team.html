@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Auction Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Bytez Premier League</h1>
+    </header>
+    
+    <section>
+        <h2>Teams</h2>
+        <div class="teams-container">
+            {% for team in teams %}
+                <div class="team-card">
+                    <img src="{{ team.logo.url }}" alt="{{ team.team_name }} Logo">
+                    <h3>{{ team.team_name }}</h3>
+                    <p><strong>Manager:</strong> {{ team.manager }}</p>
+                    <p><strong>Owner:</strong> {{ team.owner }}</p>
+                    <p><strong>Purse Remaining:</strong> ₹{{ team.purse_remaining }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <h2>Players</h2>
+        <div class="players-container">
+            {% for player in players %}
+                <div class="player-card">
+                    <img src="{{ player.card_image.url }}" alt="{{ player.name }} Card">
+                    <h3>{{ player.name }}</h3>
+                    <p><strong>Base Price:</strong> ₹{{ player.base_price }}</p>
+                    <p><strong>Year:</strong> {{ player.year }}</p>
+                    <p><strong>Team:</strong> {{ player.team.team_name|default:"Not Assigned" }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>
