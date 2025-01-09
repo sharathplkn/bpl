@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  {% block stylesheet %}{% endblock stylesheet %}
 </head>
 <body>
   <div class="wrapper">
     <header class="header">
       <div class="logo-container">
-        <img src="{% static '/images/logo.png' %}" alt="Bytez Logo" class="left-logo">
+        <img src="{% static 'images/logo.png' %}" alt="Bytez Logo" class="left-logo">
         <div class="header-content">
           <h3>BYTEZ 3.0</h3>
           <h4>COMPUTER SCIENCE ASSOCIATION 2024-2025</h4>
@@ -29,7 +30,7 @@
         </li>
       </ul>
     </nav>
-    
+    {% block firework %}{% endblock firework %}
     <div class="content">
       <div class="area">
         <ul class="circles">

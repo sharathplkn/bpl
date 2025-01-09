@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import team, player
 import random
 from django.core.paginator import Paginator
@@ -49,8 +50,8 @@ def auction(request, player_id):
                 current_player.save()
                 selected_team.purse_remaining -= price
                 selected_team.save()
-
-            return redirect('players')  # Redirect back to the player cards page after the auction
+            return redirect(reverse('assigned', kwargs={'player_id': player_id}))
+            #return redirect('assigned')  # Redirect back to the player cards page after the auction
 
     else:
         form = AuctionForm()
@@ -60,3 +61,12 @@ def auction(request, player_id):
         'form': form,
         'teams': teams,
     })
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import player
+
+def assigned(request, player_id):
+    current_player = get_object_or_404(player, id=player_id)
+    club = current_player.team
+    return render(request, 'auction/assigned.html', {'player': current_player, 'club': club})
