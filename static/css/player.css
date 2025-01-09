@@ -2,48 +2,47 @@
 
 
 .container {
-
-    margin: 40px auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color: #f9f9f9;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  color: #f9f9f9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
-
 .player-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
 }
-
 .player-card {
     position: relative;
+    z-index: 10; /* Ensure the card is above other elements */
     width: 150px;
     height: 200px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
     clip-path: polygon(
-        94% 15%, 87% 14%, 75% 10%, 65% 9%, 60% 8%, 
-        55% 10%, 50% 7%, 44% 10%, 40% 8%, 31% 9%, 
-        23% 10%, 17% 13%, 10% 14%, 6% 15%, 7% 70%, 
-        4% 71%, 5% 82%, 6% 84%, 7% 87%, 10% 89%, 
-        14% 91%, 18% 92%, 23% 92%, 28% 92%, 35% 92%, 
-        40% 93%, 44% 94%, 48% 96%, 50% 96%, 54% 94%, 
-        59% 94%, 64% 93%, 71% 92%, 76% 92%, 84% 92%, 
-        89% 89%, 93% 86%, 95% 79%, 95% 74%, 95% 71%, 
-        93% 70%
+      94% 15%, 87% 14%, 75% 10%, 65% 9%, 60% 8%, 
+      55% 10%, 50% 7%, 44% 10%, 40% 8%, 31% 9%, 
+      23% 10%, 17% 13%, 10% 14%, 6% 15%, 7% 70%, 
+      4% 71%, 5% 82%, 6% 84%, 7% 87%, 10% 89%, 
+      14% 91%, 18% 92%, 23% 92%, 28% 92%, 35% 92%, 
+      40% 93%, 44% 94%, 48% 96%, 50% 96%, 54% 94%, 
+      59% 94%, 64% 93%, 71% 92%, 76% 92%, 84% 92%, 
+      89% 89%, 93% 86%, 95% 79%, 95% 74%, 95% 71%, 
+      93% 70%
     );
-}
-
-.player-card a {
+ 
+  }
+  
+  .player-card a {
     display: block;
     position: absolute;
     top: 0;
@@ -51,47 +50,208 @@ h1 {
     width: 100%;
     height: 100%;
     text-decoration: none;
-    color: inherit;
-    z-index: 20;
-}
-
+    color: inherit; /* Optional: Use `inherit` to take the parent's color */
+    z-index: 20; /* Ensure the link is above other elements */
+  }
+  
 .player-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s;
-}
+    z-index: 10; /* Ensure the card is above other elements */
 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .player-card:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 24px rgba(164, 81, 81, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 12px 24px rgba(164, 81, 81, 0.4);
+}
+/* Card Glow Animation */
+.player-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  clip-path: polygon(
+      94% 15%, 87% 14%, 75% 10%, 65% 9%, 60% 8%, 
+      55% 10%, 50% 7%, 44% 10%, 40% 8%, 31% 9%, 
+      23% 10%, 17% 13%, 10% 14%, 6% 15%, 7% 70%, 
+      4% 71%, 5% 82%, 6% 84%, 7% 87%, 10% 89%, 
+      14% 91%, 18% 92%, 23% 92%, 28% 92%, 35% 92%, 
+      40% 93%, 44% 94%, 48% 96%, 50% 96%, 54% 94%, 
+      59% 94%, 64% 93%, 71% 92%, 76% 92%, 84% 92%, 
+      89% 89%, 93% 86%, 95% 79%, 95% 74%, 95% 71%, 
+      93% 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.player-card:hover::after {
+  opacity: 1;
+}
+*{
+    margin: 0px;
+    padding: 0px;
 }
 
-.player-card::after {
-    content: '';
+body{
+    font-family: 'Exo', sans-serif;
+}
+
+
+.context {
+    width: 100%;
+    position: absolute;
+    top:50vh;
+    
+}
+
+.context h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+
+.circles {
+    pointer-events: none;
+}
+.area{
+
+    width: 100%;
+    height:100vh;
+    
+   
+}
+
+.circles{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    clip-path: polygon(
-        94% 15%, 87% 14%, 75% 10%, 65% 9%, 60% 8%, 
-        55% 10%, 50% 7%, 44% 10%, 40% 8%, 31% 9%, 
-        23% 10%, 17% 13%, 10% 14%, 6% 15%, 7% 70%, 
-        4% 71%, 5% 82%, 6% 84%, 7% 87%, 10% 89%, 
-        14% 91%, 18% 92%, 23% 92%, 28% 92%, 35% 92%, 
-        40% 93%, 44% 94%, 48% 96%, 50% 96%, 54% 94%, 
-        59% 94%, 64% 93%, 71% 92%, 76% 92%, 84% 92%, 
-        89% 89%, 93% 86%, 95% 79%, 95% 74%, 95% 71%, 
-        93% 70%
-    );
-    opacity: 0;
-    transition: opacity 0.3s;
+    overflow: hidden;
 }
 
-.player-card:hover::after {
-    opacity: 1;
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+
+
+
+
+.player-card {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.player-card img {
+    width: 100%;
+    height: auto;
 }
 
 .sold-out-overlay {
@@ -100,7 +260,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); /* Optional for dimming effect */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -112,116 +272,3 @@ h1 {
     opacity: 0.9;
 }
 
-/* Circles animation */
-.area {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-}
-
-.circles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.circles li {
-    position: absolute;
-    list-style: none;
-    background: rgba(255, 255, 255, 0.2);
-    animation: animate 25s linear infinite;
-    bottom: -150px;
-}
-
-.circles li:nth-child(1) {
-    left: 25%;
-    width: 80px;
-    height: 80px;
-    animation-delay: 0s;
-}
-
-.circles li:nth-child(2) {
-    left: 10%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 2s;
-    animation-duration: 12s;
-}
-
-.circles li:nth-child(3) {
-    left: 70%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 4s;
-}
-
-.circles li:nth-child(4) {
-    left: 40%;
-    width: 60px;
-    height: 60px;
-    animation-delay: 0s;
-    animation-duration: 18s;
-}
-
-.circles li:nth-child(5) {
-    left: 65%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 0s;
-}
-
-.circles li:nth-child(6) {
-    left: 75%;
-    width: 110px;
-    height: 110px;
-    animation-delay: 3s;
-}
-
-.circles li:nth-child(7) {
-    left: 35%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 7s;
-}
-
-.circles li:nth-child(8) {
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    animation-delay: 15s;
-    animation-duration: 45s;
-}
-
-.circles li:nth-child(9) {
-    left: 20%;
-    width: 15px;
-    height: 15px;
-    animation-delay: 2s;
-    animation-duration: 35s;
-}
-
-.circles li:nth-child(10) {
-    left: 85%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 0s;
-    animation-duration: 11s;
-}
-
-@keyframes animate {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
-    }
-
-    100% {
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-        border-radius: 50%;
-    }
-}

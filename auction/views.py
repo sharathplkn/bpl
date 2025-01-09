@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import team, player
 import random
+from django.core.paginator import Paginator
 from .forms import AuctionForm
 from django.shortcuts import get_object_or_404
 
@@ -23,8 +24,14 @@ def team_detail(request, team_id):
     return render(request, 'auction/team_detail.html', {'team': team_obj, 'players': players})
 
 def players(request):
-    players = player.objects.all()
-    return render(request,'auction/player.html',{'players':players})
+    players_list = player.objects.all()  # Query all players
+    paginator = Paginator(players_list, 18)  # Show 6 players per page
+    page_number = request.GET.get('page')  # Get current page number from GET params
+    players = paginator.get_page(page_number)  # Get the players for the current page
+
+    return render(request, 'auction/player.html', {'players': players})
+
+
 
 def auction(request, player_id):
     teams = team.objects.all()  # Fetch all teams to display their remaining purse
