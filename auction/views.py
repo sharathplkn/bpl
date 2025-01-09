@@ -25,7 +25,7 @@ def team_detail(request, team_id):
 
 def players(request):
     players_list = player.objects.all()  # Query all players
-    paginator = Paginator(players_list, 18)  # Show 6 players per page
+    paginator = Paginator(players_list, 14)  # Show 6 players per page
     page_number = request.GET.get('page')  # Get current page number from GET params
     players = paginator.get_page(page_number)  # Get the players for the current page
 

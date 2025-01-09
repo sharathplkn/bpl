@@ -6,43 +6,107 @@
 {% block content %}
     <style>
         .team-detail {
-            text-align: center;
+            max-width: 1300px;
+            margin: 3% auto;
             padding: 20px;
+            background-color: white;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            color: #333;
         }
+        h2{
+            color: black;
+            text-align: center;
+            font-weight: bolder;
+            font-size: xx-large;
+        }
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            gap: 20px; 
+            padding: 35px;
+            background-color: #f2f2f2; 
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 10px; 
+            font-family: Arial, sans-serif;
+            margin: auto 30%;
+        }
+
         .team-logo {
-            max-width: 150px; /* Adjust to make the logo smaller */
-            max-height: 150px;
-            margin-bottom: 20px;
+            width: 150px; 
+            height: auto;
+            border-radius: 8px; 
+            object-fit: contain;
         }
-        table {
-            margin: 20px auto; /* Center the table */
+
+        .info table {
             border-collapse: collapse;
-            width: 80%;
-            background-color: #f9f9f9; /* Light gray background */
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: auto;
+            font-size: 18px; /* Increased font size */
+            color: #333;
+            background-color: #f7f7f7; /* Light background color */
+            border: 1px solid #ddd; /* Table border */
+            border-radius: 5px; /* Rounded corners for the table */
+            overflow: hidden; /* Ensure rounded corners are applied */
         }
-        th, td {
-            border: 1px solid #ddd; /* Add table borders */
-            padding: 10px;
+
+        .info table th,
+        .info table td {
+            padding: 10px 15px; /* Adjusted padding for better spacing */
             text-align: left;
+            border-bottom: 1px solid #ddd; /* Row borders */
         }
-        th {
-            background-color: #4CAF50; /* Green background for headers */
-            color: white; /* White text for headers */
+
+        .info table th {
+            background-color: black;
             font-weight: bold;
+            color: white;
         }
+
+        .info table td {
+            background-color: #38ef7d;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .info table td:first-child {
+            font-weight: bold; /* Make the first column text bolder */
+            color: black; /* Slightly darker text for distinction */
+        }
+
+        .purse {
+            text-align: center;
+            padding: 10px;  
+            margin: 10px;
+        }
+
+        .purse h2 {
+            margin: 0;
+            font-size: 40px; 
+            font-weight: bolder; 
+            color: black;
+        }
+
+        .purse .highlight {
+            color: red; 
+            font-weight: bolder; 
+            font-size: 42px; 
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle text shadow for pop effect */
+        }
+
+
         .players-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
             margin-top: 20px;
-            padding: 20px;
+            padding: 30px;
             background-color: #f2f2f2; /* Light gray background for player section */
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
         }
         .player-card {
             border: 1px solid #ccc;
@@ -59,45 +123,48 @@
             object-fit: cover;
             margin-bottom: 10px;
         }
+        
         .back-link {
             display: inline-block;
             margin-top: 20px;
             text-decoration: none;
-            color:black;
+            color: #333; /* Dark text color to match the other text */
             font-weight: bold;
+            padding: 10px 20px;
+            background-color: #f2f2f2; /* Light background to match the sections */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
         }
+
         .back-link:hover {
-            text-decoration: underline;
+            background-color: #000000; /* Red background on hover */
+            color: white; /* White text on hover */
+            text-decoration: none; /* Remove underline on hover */
         }
-        body{
-            background-color: white;
-        }
-        h2{
-            font-size: xx-large;
-        }
+
     </style>
 
     <div class="team-detail">
-        <h2>{{ team.team_name }}</h2>
-        <img src="{{ team.logo.url }}" alt="{{ team.team_name }} Logo" class="team-logo">
-        
-        
-        <table>
-            <tr>
-                <th>Manager</th>
-                <td>{{ team.manager }}</td>
-            </tr>
-            <tr>
-                <th>Owner</th>
-                <td>{{ team.owner }}</td>
-            </tr>
-            <tr>
-                <th>Purse Remaining</th>
-                <td>${{ team.purse_remaining }} M</td>
-            </tr>
-        </table>
-        
-        
+        <div class="head">
+            <h2>{{ team.team_name }}</h2>
+        </div>
+        <div class="info">
+            <img src="{{ team.logo.url }}" alt="{{ team.team_name }} Logo" class="team-logo">
+            <table>
+                <tr>
+                    <th>Manager</th>
+                    <td>{{ team.manager }}</td>
+                </tr>
+                <tr>
+                    <th>Owner</th>
+                    <td>{{ team.owner }}</td>
+                </tr>
+            </table> 
+        </div>
+        <div class="purse">
+            <h2>Purse Remaining: <span class="highlight">${{ team.purse_remaining }} M</span></h2>
+        </div>        
         <div class="players-container">
             
             {% for player in players %}

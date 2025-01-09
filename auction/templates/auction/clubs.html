@@ -3,26 +3,36 @@
 
 {% block title %}Clubs{% endblock %}
 
-{% block content %}
-    <header>
-        <h1>Clubs</h1>
-    </header>
-    
+{% block content %}    
     <style>
-        header {
-            text-align: center; /* Centers the heading */
-            margin-bottom: 20px; /* Adds some spacing below the heading */
+        h1{
+            color: black;
+            text-align: center;
+            padding-top: 20px;
+            text-transform: uppercase;
+            font-size: 20px;
+            font-weight: bolder;
         }
+
+        section{
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+            backdrop-filter: blur(10px);
+            margin: 3% 20% 5%;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        }
+
         .clubs-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            padding: 20px;
+            gap: 40px;
+            justify-content: space-evenly;
+            padding: 40px;
         }
+
         .club-logo img {
-            max-width: 150px; /* Adjust the width as needed */
-            max-height: 150px; /* Adjust the height as needed */
+            max-width: 250px; /* Adjust the width as needed */
+            max-height: 250px; /* Adjust the height as needed */
             object-fit: contain;
             border: 2px solid #ccc; /* Optional: Adds a border */
             border-radius: 8px; /* Optional: Adds rounded corners */
@@ -33,6 +43,9 @@
     </style>
 
     <section>
+        <div class="head">
+            <h1>Clubs</h1>
+        </div>
         <div class="clubs-container">
             {% for club in clubs %}
                 <div class="club-logo">
