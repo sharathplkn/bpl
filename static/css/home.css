@@ -10,7 +10,14 @@ html, body {
   background-position: center;
   background-repeat: no-repeat;
   background-color: black;
+  background-attachment: fixed;
   min-height: 100vh;
+}
+.ball-container {
+  position: relative;
+  display: inline-block;
+  width: 26px;
+  height: 60px;
 }
 
 /* Layout Wrapper */
@@ -18,6 +25,7 @@ html, body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Ensures content and footer are spaced */
 }
 
 /* Header */
@@ -94,9 +102,8 @@ nav ul li a:hover {
 }
 
 
-/* Footer */
 .footer {
-  margin-top: auto;
+  margin-top: auto; /* Pushes the footer to the bottom of the container */
   background: black;
   color: #fff;
   text-align: center;

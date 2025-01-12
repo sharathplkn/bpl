@@ -3,6 +3,8 @@
 
 .container {
   max-width: 1200px;
+  position: relative;
+  z-index: 20;
   margin: 40px auto;
   padding: 20px;
   background: #ffffff;
@@ -19,6 +21,7 @@ h1 {
 .player-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  z-index:10 ;
   gap: 20px;
 }
 .player-card {
