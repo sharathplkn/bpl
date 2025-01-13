@@ -212,6 +212,97 @@ span{
 }
 
 
+
+/* Style for the modal container */
+.cd-popup-container {
+    position: relative;
+    width: 400px;
+    max-width: 90%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the popup */
+.cd-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Buttons container */
+.cd-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px; /* Spacing between buttons */
+}
+
+/* Individual buttons */
+.cd-buttons li {
+    list-style: none;
+}
+
+.cd-buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#confirm-yes {
+    background-color: #4caf50; /* Green */
+}
+
+#confirm-yes:hover {
+    background-color: #45a049; /* Slightly darker green */
+}
+
+#confirm-no {
+    background-color: #f44336; /* Red */
+}
+
+#confirm-no:hover {
+    background-color: #d32f2f; /* Slightly darker red */
+}
+
+/* Close button */
+.cd-popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    text-indent: 100%; /* Hide the text */
+    white-space: nowrap;
+    overflow: hidden;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48bGluZSB4MT0iMyIgeTE9IjMiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIxMyIgeTE9IjMiIHgyPSIzIiB5Mj0iMTMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.cd-popup-close:hover {
+    transform: scale(1.2);
+}
+
+
+
 .cd-popup {
 position: fixed;
 top: 0;

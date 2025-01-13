@@ -4,7 +4,9 @@
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/auction.css' %}">
 {% endblock stylesheet %}
-{% block popup %}<div class="cd-popup" role="alert">
+
+{% block content %}
+<div class="cd-popup" role="alert">
     <div class="cd-popup-container">
       <p>Are you sure you want to submit this bid?</p>
       <ul class="cd-buttons">
@@ -13,122 +15,116 @@
       </ul>
       <a href="#0" class="cd-popup-close img-replace">Close</a>
     </div>
-  </div>{% endblock popup %}
-  {% block content %}
-  <div class='wrapper'>
-    <div class="container">
-        <!-- Auction Section -->
-        <div class="auction-section">
-            <h1 id="player_head">Player: {{ player.name }}</h1>
-
-            {% if message %}
-                <p>{{ message }}</p>
-            {% else %}
-                <img src="{{ player.card_image.url }}" alt="Player Card" style="max-width: 200px;">
-                <p><strong>Base Price:</strong> ${{ player.base_price }}</p>
-                <p><strong>Year:</strong> {{ player.year }}</p>
-                
-                <form method="POST" id="bid-form">
-                    {% csrf_token %}
-                    <div class="with_price">
-                        <label class="price-label">Price: </label>
-                        <span id="price_display">{{ form.price.value|default:"20" }}</span>
-                      </div>
-                      
-                  
-                    <div class="price-buttons">
-                      <button type="button" onclick="changePrice(-10)">-</button>
-                      <button type="button" onclick="changePrice(10)">+</button>
-                    </div>
-                  
-                    <div class="radio-inputs">
-                        {% for radio in form.team %}
-                          <label class="radio">
-                            {{ radio.tag }}
-                            <span class="name">{{ radio.choice_label }}</span>
-                          </label>
-                        {% endfor %}
-                      </div>
-                      
-                    <input type="hidden" name="price" id="id_price" value="20">
-                    <br>
-                    <button type="button" id="submit-bid-button">Submit Bid</button>
-                  </form>
-                  
-                 
-                  
-                <!-- Back Button -->
-                <form method="GET" action="{% url 'players' %}" class="back-button">
-                    <button type="submit">Go Back (Unsold)</button>
-                </form>
-            {% endif %}
+  </div>
+  <div class="container">
+    <!-- Auction Section -->
+    <div class="auction-section">
+        <h1 id="player_head">Player: {{ player.name }}</h1>
+            <img src="{{ player.card_image.url }}" alt="Player Card" style="max-width: 200px;">
+            <p><strong>Base Price:</strong> ${{ player.base_price }}</p>
+            <p><strong>Year:</strong> {{ player.year }}</p>
             
-            <script>
-                // Function to change the price by a given amount
-                function changePrice(amount) {
-                    var priceInput = document.getElementById('id_price');
-                    var currentPrice = parseFloat(priceInput.value);
-                    var newPrice = currentPrice + amount;
-                    
-                    // Ensure price is at least 20 (minimum base price)
-                    if (newPrice >= 0) {
-                        priceInput.value = newPrice;
-                        document.getElementById('price_display').innerText = newPrice;
-                    }
+            <form method="POST" id="bid-form">
+                {% csrf_token %}
+                <div class="with_price">
+                    <label class="price-label">Price: </label>
+                    <span id="price_display">{{ form.price.value|default:"20" }}</span>
+                  </div>
+                  
+              
+                <div class="price-buttons">
+                  <button type="button" onclick="changePrice(-10)">-</button>
+                  <button type="button" onclick="changePrice(10)">+</button>
+                </div>
+              
+                <div class="radio-inputs">
+                    {% for radio in form.team %}
+                      <label class="radio">
+                        {{ radio.tag }}
+                        <span class="name">{{ radio.choice_label }}</span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                  
+                <input type="hidden" name="price" id="id_price" value="20">
+                <br>
+                <button type="button" id="submit-bid-button">Submit Bid</button>
+              </form>
+              
+              
+              
+            <!-- Back Button -->
+            <form method="GET" action="{% url 'players' %}" class="back-button">
+                <button type="submit">Go Back (Unsold)</button>
+            </form>
+        
+        <script>
+            // Function to change the price by a given amount
+            function changePrice(amount) {
+                var priceInput = document.getElementById('id_price');
+                var currentPrice = parseFloat(priceInput.value);
+                var newPrice = currentPrice + amount;
+                
+                // Ensure price is at least 20 (minimum base price)
+                if (newPrice >= 0) {
+                    priceInput.value = newPrice;
+                    document.getElementById('price_display').innerText = newPrice;
                 }
+            }
 
-                document.addEventListener("DOMContentLoaded", () => {
-                const form = document.getElementById("bid-form");
-                const submitButton = document.getElementById("submit-bid-button");
-                const modal = document.querySelector(".cd-popup");
-                const closeModal = document.querySelector(".cd-popup-close");
-                const confirmYes = document.getElementById("confirm-yes");
-                const confirmNo = document.getElementById("confirm-no");
+            document.addEventListener("DOMContentLoaded", () => {
+              
+              const form = document.getElementById("bid-form");
+              const submitButton = document.getElementById("submit-bid-button");
+              const modal = document.querySelector(".cd-popup");
+              const closeModal = document.querySelector(".cd-popup-close");
+              const confirmYes = document.getElementById("confirm-yes");
+              const confirmNo = document.getElementById("confirm-no");
+          
+              // Show modal when Submit Bid button is clicked
+              submitButton.addEventListener("click", () => {
+                  modal.classList.add("is-visible");
+              });
+          
+              // Close modal on 'No' or 'Close'
+              closeModal.addEventListener("click", (event) => {
+                  event.preventDefault();
+                  modal.classList.remove("is-visible");
+              });
+          
+              confirmNo.addEventListener("click", (event) => {
+                  event.preventDefault();
+                  modal.classList.remove("is-visible");
+              });
+          
+              // Submit the form on 'Yes'
+              confirmYes.addEventListener("click", (event) => {
+                  event.preventDefault();
+                  form.submit(); // Submit the form programmatically
+              });
+          
+              // Close modal when clicking outside the modal container
+              window.addEventListener("click", (event) => {
+                  if (event.target === modal) {
+                      modal.classList.remove("is-visible");
+                  }
+              });
+          });
+          
+        </script>
+    </div>
 
-                // Show modal when Submit Bid button is clicked
-                submitButton.addEventListener("click", () => {
-                    modal.classList.add("is-visible");
-                });
-
-                // Close modal on 'No' or 'Close'
-                closeModal.addEventListener("click", () => {
-                    modal.classList.remove("is-visible");
-                });
-
-                confirmNo.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    modal.classList.remove("is-visible");
-                });
-
-                // Submit the form on 'Yes'
-                confirmYes.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    form.submit(); // Submit the form programmatically
-                });
-
-                // Close modal when clicking outside the modal container
-                window.addEventListener("click", (event) => {
-                    if (event.target === modal) {
-                    modal.classList.remove("is-visible");
-                    }
-                });
-});
-
-            </script>
+    <!-- Teams Section -->
+    <div class="teams-section">
+    <h2>Team's Remaining Purse</h2>
+    {% for t in teams %}
+        <div class="team">
+            <img src="{{ t.logo.url }}" alt="Team Logo">
+            <h3>{{ t.team_name }}</h3>
+            <p><span>Remaining Purse:</span> ${{ t.purse_remaining }}M</p>
+            <p><span>Count:</span>  {{ t.players.count }}</p>
         </div>
-
-       <!-- Teams Section -->
-       <div class="teams-section">
-        <h2>Team's Remaining Purse</h2>
-        {% for t in teams %}
-            <div class="team">
-                <img src="{{ t.logo.url }}" alt="Team Logo">
-                <h3>{{ t.team_name }}</h3>
-                <p><span>Remaining Purse:</span> ${{ t.purse_remaining }}M</p>
-                <p><span>Count:</span>  {{ t.players.count }}</p>
-            </div>
-        {% endfor %}
-    </div>
-    </div>
+    {% endfor %}
 </div>
+  </div>
 {% endblock %}
