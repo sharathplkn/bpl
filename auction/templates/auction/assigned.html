@@ -1,0 +1,137 @@
+{% extends "auction/home.html" %}
+{% load static %}
+{% block title %}Assigned{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static "css/assigned.css" %}">
+<style>
+    
+.btn {
+  font-size: 17px;
+  background: transparent;
+  border: none;
+  padding: 1em 1.5em;
+  color:rgb(255, 255, 255);
+  text-transform: uppercase;
+  position: relative;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #ffc506;
+  transition: 0.5s ease;
+}
+
+.btn:hover {
+  color: #1e1e2b;
+  transition-delay: 0.5s;
+}
+
+.btn:hover::before {
+  width: 100%;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  background-color: #ffc506;
+  transition: 0.4s ease;
+  z-index: -1;
+}
+
+.btn:hover::after {
+  height: 100%;
+  transition-delay: 0.4s;
+  color: aliceblue;
+}
+h1{
+  color: black;
+  text-align: center;
+  padding-top: 20px;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+section{
+  background: linear-gradient(90deg, rgba(37, 34, 34, 0.7), rgba(62, 58, 58, 0.5));
+  backdrop-filter: blur(10px);
+  margin: 3% 20% 5%;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.clubs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-evenly;
+  padding: 40px;
+}
+
+.club-logo img {
+  max-width: 250px; /* Adjust the width as needed */
+  max-height: 250px; /* Adjust the height as needed */
+  object-fit: contain;
+  border: 2px solid #ccc; /* Optional: Adds a border */
+  border-radius: 8px; /* Optional: Adds rounded corners */
+}
+.club-logo {
+  text-align: center;
+}
+.clubs-container {
+  display: flex;
+  flex-direction: column; /* Stacks elements vertically */
+  align-items: center; /* Centers elements horizontally */
+  gap: 20px; /* Adds spacing between items */
+  padding: 40px;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px; /* Adds space between the images and the button */
+}
+
+</style>
+{% endblock stylesheet %}
+
+
+
+
+
+{% block content %}
+<div class="firework"></div>
+<div class="firework"></div>
+<div class="firework"></div>
+<a href="{% url "players" %}">
+  <style>
+    
+</style>
+
+<section>
+  <div class="head">
+      <h1 style="color: #ffffff;">Player Sold</h1>
+  </div>
+  <div class="clubs-container">
+      <div class="club-logo">
+          <img src="{{ player.card_image.url }}" alt="Player Card">
+          <img src="{{ club.logo.url }}" alt="{{ club.team_name }} Logo">
+      </div>
+      <div class="button-container">
+          <button class="btn">Go to Players</button>
+      </div>
+  </div>
+</section>
+
+</a>
+{% endblock content %}

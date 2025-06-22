@@ -1,292 +1,130 @@
 {% extends 'auction/home.html' %}
 {% load static %}
+{% block title %}Auction{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/auction.css' %}">
+{% endblock stylesheet %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auction</title>
-    <style>
-     
-        .container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 20px;
-        }
-
-        .auction-section {
-            width: 70%;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .teams-section {
-            width: 28%;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-
-
-        p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        img {
-            display: block;
-            margin: 10px auto;
-        }
-
-        /* Auction Section */
-        form {
-            margin-top: 20px;
-        }
-
-        label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .back-button button {
-            background-color: #6c757d;
-        }
-
-        .back-button button:hover {
-            background-color: #5a6268;
-        }
-
-        #price_display {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .price-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        /* Teams Section */
-        .team {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .team:last-child {
-            border-bottom: none;
-        }
-
-        .team img {
-            max-width: 50px;
-            margin-bottom: 10px;
-            border-radius: 50%;
-        }
-
-        .team h3 {
-            margin: 5px 0;
-            font-size: 18px;
-        }
-
-        .team p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .auction-section, .teams-section {
-                width: 100%;
-            }
-        }
-
-
-        .cd-popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s 0s, visibility 0s 0.3s;
-        }
-
-    .cd-popup.is-visible {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s 0s, visibility 0s 0s;
-    }
-
-    .cd-popup-container {
-    position: relative;
-    width: 300px;
-    margin: 100px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    transform: translateY(-40px);
-    transition-property: transform;
-    transition-duration: 0.3s;
-    }
-
-    .is-visible .cd-popup-container {
-    transform: translateY(0);
-    }
-
-    .cd-popup-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    text-decoration: none;
-    font-size: 18px;
-    color: black;
-    }
-
-    </style>
-</head>
-
-    <div class="container">
-        <!-- Auction Section -->
-        <div class="auction-section">
-            <h1>Auction for Player: {{ player.name }}</h1>
-
-            {% if message %}
-                <p>{{ message }}</p>
-            {% else %}
-                <img src="{{ player.card_image.url }}" alt="Player Card" style="max-width: 200px;">
-                <p><strong>Base Price:</strong> ${{ player.base_price }}</p>
-                <p><strong>Year:</strong> {{ player.year }}</p>
-                
-                <form method="POST" id="bid-form">
-                    {% csrf_token %}
-                    <div>
-                      <label>Price: </label>
-                      <span id="price_display">{{ form.price.value|default:"20" }}</span>
-                    </div>
-                  
-                    <div class="price-buttons">
-                      <button type="button" onclick="changePrice(-10)">-</button>
-                      <button type="button" onclick="changePrice(10)">+</button>
-                    </div>
-                  
-                    {{ form.team }}
-                    <input type="hidden" name="price" id="id_price" value="20">
-                    <br>
-                    <button type="button" id="submit-bid-button">Submit Bid</button>
-                  </form>
-                  
-                  <div class="cd-popup" role="alert">
-                    <div class="cd-popup-container">
-                      <p>Are you sure you want to submit this bid?</p>
-                      <ul class="cd-buttons">
-                        <li><a href="#0" id="confirm-yes">Yes</a></li>
-                        <li><a href="#0" id="confirm-no">No</a></li>
-                      </ul>
-                      <a href="#0" class="cd-popup-close img-replace">Close</a>
-                    </div>
+<div class="cd-popup" role="alert">
+    <div class="cd-popup-container">
+      <p>Are you sure you want to submit this bid?</p>
+      <ul class="cd-buttons">
+        <li><a href="#0" id="confirm-yes">Yes</a></li>
+        <li><a href="#0" id="confirm-no">No</a></li>
+      </ul>
+      <a href="#0" class="cd-popup-close img-replace">Close</a>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Auction Section -->
+    <div class="auction-section">
+        <h1 id="player_head">Player: {{ player.name }}</h1>
+            <img src="{{ player.card_image.url }}" alt="Player Card" style="max-width: 200px;">
+            <p><strong>Base Price:</strong> ${{ player.base_price }}</p>
+            <p><strong>Year:</strong> {{ player.year }}</p>
+            
+            <form method="POST" id="bid-form">
+                {% csrf_token %}
+                <div class="with_price">
+                    <label class="price-label">Price: </label>
+                    <span id="price_display">{{ form.price.value|default:"20" }}</span>
                   </div>
                   
-                <!-- Back Button -->
-                <form method="GET" action="{% url 'players' %}" class="back-button">
-                    <button type="submit">Go Back (Unsold)</button>
-                </form>
-            {% endif %}
-
-            <script>
-                // Function to change the price by a given amount
-                function changePrice(amount) {
-                    var priceInput = document.getElementById('id_price');
-                    var currentPrice = parseFloat(priceInput.value);
-                    var newPrice = currentPrice + amount;
-                    
-                    // Ensure price is at least 20 (minimum base price)
-                    if (newPrice >= 20) {
-                        priceInput.value = newPrice;
-                        document.getElementById('price_display').innerText = newPrice;
-                    }
-                }
-
-                document.addEventListener("DOMContentLoaded", () => {
-                const form = document.getElementById("bid-form");
-                const submitButton = document.getElementById("submit-bid-button");
-                const modal = document.querySelector(".cd-popup");
-                const closeModal = document.querySelector(".cd-popup-close");
-                const confirmYes = document.getElementById("confirm-yes");
-                const confirmNo = document.getElementById("confirm-no");
-
-                // Show modal when Submit Bid button is clicked
-                submitButton.addEventListener("click", () => {
-                    modal.classList.add("is-visible");
-                });
-
-                // Close modal on 'No' or 'Close'
-                closeModal.addEventListener("click", () => {
-                    modal.classList.remove("is-visible");
-                });
-
-                confirmNo.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    modal.classList.remove("is-visible");
-                });
-
-                // Submit the form on 'Yes'
-                confirmYes.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    form.submit(); // Submit the form programmatically
-                });
-
-                // Close modal when clicking outside the modal container
-                window.addEventListener("click", (event) => {
-                    if (event.target === modal) {
-                    modal.classList.remove("is-visible");
-                    }
-                });
-});
-
-            </script>
-        </div>
-
-        <!-- Teams Section -->
-        <div class="teams-section">
-            <h2>Teams' Remaining Purse</h2>
-            {% for t in teams %}
-                <div class="team">
-                    <img src="{{ t.logo.url }}" alt="Team Logo">
-                    <h3>{{ t.team_name }}</h3>
-                    <p>Remaining Purse: ${{ t.purse_remaining }}</p>
+              
+                <div class="price-buttons">
+                  <button type="button" onclick="changePrice(-10)">-</button>
+                  <button type="button" onclick="changePrice(10)">+</button>
                 </div>
-            {% endfor %}
-        </div>
+              
+                <div class="radio-inputs">
+                    {% for radio in form.team %}
+                      <label class="radio">
+                        {{ radio.tag }}
+                        <span class="name">{{ radio.choice_label }}</span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                  
+                <input type="hidden" name="price" id="id_price" value="20">
+                <br>
+                <button type="button" id="submit-bid-button">Submit Bid</button>
+              </form>
+              
+              
+              
+            <!-- Back Button -->
+            <form method="GET" action="{% url 'players' %}" class="back-button">
+                <button type="submit">Go Back (Unsold)</button>
+            </form>
+        
+        <script>
+            // Function to change the price by a given amount
+            function changePrice(amount) {
+                var priceInput = document.getElementById('id_price');
+                var currentPrice = parseFloat(priceInput.value);
+                var newPrice = currentPrice + amount;
+                
+                // Ensure price is at least 20 (minimum base price)
+                if (newPrice >= 0) {
+                    priceInput.value = newPrice;
+                    document.getElementById('price_display').innerText = newPrice;
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+              
+              const form = document.getElementById("bid-form");
+              const submitButton = document.getElementById("submit-bid-button");
+              const modal = document.querySelector(".cd-popup");
+              const closeModal = document.querySelector(".cd-popup-close");
+              const confirmYes = document.getElementById("confirm-yes");
+              const confirmNo = document.getElementById("confirm-no");
+          
+              // Show modal when Submit Bid button is clicked
+              submitButton.addEventListener("click", () => {
+                  modal.classList.add("is-visible");
+              });
+          
+              // Close modal on 'No' or 'Close'
+              closeModal.addEventListener("click", (event) => {
+                  event.preventDefault();
+                  modal.classList.remove("is-visible");
+              });
+          
+              confirmNo.addEventListener("click", (event) => {
+                  event.preventDefault();
+                  modal.classList.remove("is-visible");
+              });
+          
+              // Submit the form on 'Yes'
+              confirmYes.addEventListener("click", (event) => {
+                  event.preventDefault();
+                  form.submit(); // Submit the form programmatically
+              });
+          
+              // Close modal when clicking outside the modal container
+              window.addEventListener("click", (event) => {
+                  if (event.target === modal) {
+                      modal.classList.remove("is-visible");
+                  }
+              });
+          });
+          
+        </script>
     </div>
+
+    <!-- Teams Section -->
+    <div class="teams-section">
+    <h2>Team's Remaining Purse</h2>
+    {% for t in teams %}
+        <div class="team">
+            <img src="{{ t.logo.url }}" alt="Team Logo">
+            <h3>{{ t.team_name }}</h3>
+            <p><span>Remaining Purse:</span> ${{ t.purse_remaining }}M</p>
+            <p><span>Count:</span>  {{ t.players.count }}</p>
+        </div>
+    {% endfor %}
+</div>
+  </div>
 {% endblock %}

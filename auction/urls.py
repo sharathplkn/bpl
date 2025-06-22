@@ -7,4 +7,5 @@ urlpatterns=[
     path('auction/<int:player_id>/', views.auction, name='auction'),
     path('clubs/', views.clubs, name='clubs'),
     path('clubs/<int:team_id>/', views.team_detail, name='team_detail'),
+    path('assigned/<int:player_id>/',views.assigned, name='assigned')
 ]
